@@ -40,7 +40,7 @@ EOF
 package() {
   msg2 "Install the assembly at /opt/${pkgname}..."
   install -dm755                                      "${pkgdir}/opt/${pkgname}"
-  cp -a "${srcdir}"/yjp-${_version}/* "${pkgdir}/opt/${pkgname}"
+  cp -a "${srcdir}"/YourKit-JavaProfiler-${_version}/* "${pkgdir}/opt/${pkgname}"
 
   msg2 "Install an executable at /usr/bin/${pkgname}..."
   install -Dm755 "${srcdir}/${pkgname}.sh" "${pkgdir}/usr/bin/${pkgname}"
