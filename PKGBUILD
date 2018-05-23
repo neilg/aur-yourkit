@@ -2,7 +2,7 @@
 # Contributor: Julien Nicoulaud <julien.nicoulaud@gmail.com>
 pkgname=yourkit
 _version=2018.04
-_build=64
+_build=70
 pkgver=${_version}b${_build}
 pkgrel=1
 pkgdesc="Java CPU and memory profiler."
@@ -15,13 +15,13 @@ optdepends=('intellij-idea-community-edition: A Java IDE that integrates with Yo
             'netbeans: A Java IDE that integrates with Yourkit')
 options=(!strip)
 source=(http://www.yourkit.com/download/YourKit-JavaProfiler-${_version}-b${_build}.zip)
-sha256sums=('5e1d7aab3d18da10488d38fd122f81a5c9f54a8a2d671ff843f30c309ae567f6')
+sha256sums=('bf15bb06474b3670cfd6f05c58304118eaaebfa9fb8b90e927f47b5e300683d1')
 
 build() {
   msg2 "Generate scripts for /usr/bin..."
   cat <<EOF > "${srcdir}"/${pkgname}.sh
 #!/bin/sh
-cd /opt/${pkgname}/bin && sh yjp.sh $@
+cd /opt/${pkgname}/bin && sh profiler.sh $@
 EOF
 
   msg2 "Generate desktop application entry for recorder..."
@@ -30,7 +30,7 @@ EOF
 Name=Yourkit
 Comment=${pkgdesc}
 Exec=/usr/bin/${pkgname} %u
-Icon=/opt/${pkgname}/bin/yjp.ico
+Icon=/opt/${pkgname}/bin/profiler.ico
 Terminal=false
 Type=Application
 Categories=Application;Development;
@@ -49,10 +49,6 @@ package() {
   install -dm755                "${pkgdir}/usr/share/doc/${pkgname}"
   ln -s /opt/${pkgname}/probes  "${pkgdir}/usr/share/doc/${pkgname}/probes"
   ln -s /opt/${pkgname}/samples "${pkgdir}/usr/share/doc/${pkgname}/samples"
-
-  msg2 "Install link to the config file in /etc..."
-  install -dm755                    "${pkgdir}"/etc
-  ln -s /opt/${pkgname}/bin/yjp.ini "${pkgdir}"/etc/${pkgname}.ini
 
   msg2 "Install links to copyright resources at /usr/share/licenses/${pkgname}..."
   install -dm755                            "${pkgdir}/usr/share/licenses/${pkgname}"
